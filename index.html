@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buku Tamu & Absensi — Pameran RPL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --space-dark: #0a0a1a;
+            --space-darker: #0f0f23;
+            --space-blue: #1e1b4b;
+            --space-purple: #4c1d95;
+            --space-pink: #7e22ce;
+            --blue-accent: #3b82f6;
+            --purple-accent: #8b5cf6;
+            --pink-accent: #c084fc;
+            --pink-light: #d8b4fe;
+            --white: #ffffff;
+            --gray-light: #f8fafc;
+            --gray: #cbd5e1;
+            --gray-dark: #64748b;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --glow-blue: 0 0 20px rgba(59, 130, 246, 0.3);
+            --glow-purple: 0 0 20px rgba(139, 92, 246, 0.3);
+            --glow-pink: 0 0 20px rgba(192, 132, 252, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, var(--space-dark) 0%, var(--space-darker) 30%, var(--space-blue) 70%, var(--space-purple) 100%);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(192, 132, 252, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 20px 0 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: -40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            width: 220px;
+            height: 220px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .hero p {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 20px;
+            font-weight: 400;
+            line-height: 1.6;
+            letter-spacing: -0.2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding: 0 0 80px;
+        }
+
+        /* Form Section */
+        .form-container {
+            background: rgba(15, 15, 35, 0.7);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            backdrop-filter: blur(15px);
+            box-shadow: var(--glow-purple), 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .form-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--white);
+            letter-spacing: -0.3px;
+        }
+
+        .form-subtitle {
+            color: var(--gray);
+            margin-bottom: 32px;
+            font-size: 1rem;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.1px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--gray-light);
+            font-size: 0.95rem;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.1px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            background: rgba(10, 10, 30, 0.8);
+            color: var(--white);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            letter-spacing: -0.1px;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--purple-accent);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+            background: rgba(10, 10, 30, 0.9);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .char-count {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--gray-dark);
+            margin-top: 5px;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.1px;
+        }
+
+        .mood-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .mood-option {
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(10, 10, 30, 0.8);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            text-align: center;
+        }
+
+        .mood-option:hover {
+            transform: scale(1.05);
+            background: rgba(139, 92, 246, 0.2);
+            border-color: var(--purple-accent);
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+        }
+
+        .mood-option.selected {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: var(--purple-accent);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--blue-accent) 0%, var(--purple-accent) 50%, var(--pink-accent) 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            width: 100%;
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -0.2px;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.5);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Messages Section */
+        .messages-section {
+            background: rgba(15, 15, 35, 0.6);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            backdrop-filter: blur(15px);
+            box-shadow: var(--glow-blue), 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            max-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .messages-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .messages-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-shrink: 0;
+        }
+
+        .messages-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: -0.3px;
+        }
+
+        .messages-count {
+            background: linear-gradient(135deg, var(--blue-accent) 0%, var(--purple-accent) 100%);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.1px;
+        }
+
+        .messages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+            padding-right: 8px;
+            flex-grow: 1;
+        }
+
+        .messages-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .messages-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .messages-list::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--blue-accent) 0%, var(--purple-accent) 100%);
+            border-radius: 10px;
+        }
+
+        .message-card {
+            background: rgba(10, 10, 30, 0.7);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(192, 132, 252, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .message-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--blue-accent), var(--purple-accent), var(--pink-accent));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .message-card:hover::before {
+            opacity: 1;
+        }
+
+        .message-card:hover {
+            border-color: rgba(192, 132, 252, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .message-info {
+            flex: 1;
+        }
+
+        .message-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--white);
+            margin-bottom: 4px;
+            letter-spacing: -0.1px;
+        }
+
+        .message-school {
+            color: var(--pink-light);
+            font-size: 0.9rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.1px;
+        }
+
+        .message-mood {
+            font-size: 1.8rem;
+            margin-left: 12px;
+            filter: drop-shadow(0 0 5px rgba(192, 132, 252, 0.5));
+        }
+
+        .message-text {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.1px;
+        }
+
+        .message-time {
+            color: var(--gray-dark);
+            font-size: 0.8rem;
+            margin-top: 8px;
+            text-align: right;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.1px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .empty-state .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 30, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: rgba(15, 15, 35, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.5), 0 25px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
+        }
+
+        .modal-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: -0.3px;
+        }
+
+        .modal-message {
+            color: var(--gray);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.1px;
+        }
+
+        .modal-close {
+            background: linear-gradient(135deg, var(--blue-accent) 0%, var(--purple-accent) 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.1px;
+        }
+
+        .modal-close:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Confetti */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+            background: rgb(10 10 30 / 45%);
+            text-align: center;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--purple-accent), transparent);
+        }
+
+        .footer-text {
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.1px;
+        }
+
+        /* Particle Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        .star {
+            background: white;
+            box-shadow: 0 0 5px white;
+        }
+
+        .blue-particle {
+            background: var(--blue-accent);
+            box-shadow: 0 0 10px var(--blue-accent);
+        }
+
+        .purple-particle {
+            background: var(--purple-accent);
+            box-shadow: 0 0 10px var(--purple-accent);
+        }
+
+        .pink-particle {
+            background: var(--pink-accent);
+            box-shadow: 0 0 10px var(--pink-accent);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 24px;
+            background: rgba(10, 10, 30, 0.5);
+            border-radius: 12px;
+            padding: 4px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 16px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, var(--blue-accent) 0%, var(--purple-accent) 100%);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Responsif */
+        @media (min-width: 1200px) {
+            .logo {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .logo-container {
+                margin-bottom: -45px;
+            }
+            
+            .hero p {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (min-width: 968px) {
+            .main-content {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 15px 0 10px;
+            }
+            
+            .logo {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .logo-container {
+                margin-bottom: -35px;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+
+            .form-container {
+                padding: 30px 24px;
+            }
+
+            .messages-section {
+                padding: 24px 20px;
+                max-height: 500px;
+            }
+
+            .mood-selector {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .mood-option {
+                font-size: 1.6rem;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 10px 0 5px;
+            }
+            
+            .logo {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .logo-container {
+                margin-bottom: -30px;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+            
+            .mood-selector {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .mood-option {
+                font-size: 1.4rem;
+                padding: 8px;
+            }
+            
+            .messages-section {
+                max-height: 400px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .logo {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .logo-container {
+                margin-bottom: -25px;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 15px;
+            }
+        }
+
+        /* Animasi */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Canvas untuk confetti -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="logo-container fade-in-up">
+                <img src="assets/PresenSync_logo2.png" alt="PresenSync Logo" class="logo">
+            </div>
+            <p class="fade-in-up">Buku tamu dan absensi digital untuk SkanegaFest Gim & Apps. Tuliskan pesan dan kesan Anda!</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Form Section -->
+            <section class="form-container fade-in-up">
+                <h2 class="form-title">Absensi & Buku Tamu</h2>
+                <p class="form-subtitle">Isi data diri dan tinggalkan pesan untuk para peserta pameran</p>
+                
+                <div class="tabs">
+                    <div class="tab active" data-tab="attendance">Absensi</div>
+                    <div class="tab" data-tab="message">Pesan & Kesan</div>
+                </div>
+                
+                <form id="guest-form">
+                    <div class="tab-content active" id="attendance-tab">
+                        <div class="form-group">
+                            <label for="name">Nama Lengkap</label>
+                            <input type="text" id="name" name="name" placeholder="Masukkan nama lengkap" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="school">Asal Sekolah / Instansi</label>
+                            <input type="text" id="school" name="school" placeholder="Contoh: SMK Negeri 3 Kendal" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">No. Telepon/WhatsApp</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Contoh: 08123456789">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Contoh: nama@email.com">
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="message-tab">
+                        <div class="form-group">
+                            <label for="message">Pesan & Kesan</label>
+                            <textarea id="message" name="message" maxlength="500" placeholder="Tuliskan pesan dan kesan Anda tentang SkanegaFest GIM & Apps..."></textarea>
+                            <div class="char-count"><span id="char-count">0</span>/500 karakter</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Mood Reaction</label>
+                            <div class="mood-selector">
+                                <div class="mood-option" data-emoji="😊" title="Senang">😊</div>
+                                <div class="mood-option" data-emoji="❤️" title="Suka">❤️</div>
+                                <div class="mood-option" data-emoji="👍" title="Mantap">👍</div>
+                                <div class="mood-option" data-emoji="✨" title="Keren">✨</div>
+                                <div class="mood-option" data-emoji="🚀" title="Luar biasa">🚀</div>
+                                <div class="mood-option" data-emoji="🌟" title="Inspiratif">🌟</div>
+                                <div class="mood-option" data-emoji="🎉" title="Hebat">🎉</div>
+                                <div class="mood-option" data-emoji="🔥" title="Keren banget">🔥</div>
+                            </div>
+                            <input type="hidden" id="mood" name="mood">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn pulse">
+                        Kirim Data ✨
+                    </button>
+                </form>
+            </section>
+
+            <!-- Messages Section -->
+            <section class="messages-section fade-in-up">
+                <div class="messages-header">
+                    <h2 class="messages-title">Pesan & Kesan</h2>
+                    <div class="messages-count" id="messages-count">0 pesan</div>
+                </div>
+                <div class="messages-list" id="messages-list">
+                    <!-- Pesan akan dimuat di sini -->
+                    <div class="empty-state">
+                        <div class="icon">💫</div>
+                        <p>Belum ada pesan</p>
+                        <p style="font-size: 0.9rem; margin-top: 8px;">Jadilah yang pertama meninggalkan pesan!</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="footer-text">Galuh Suci Prawesti &copy; 2025</p>
+        </div>
+    </footer>
+
+    <!-- Modal sukses -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <div class="modal-icon">🎉</div>
+            <h2 class="modal-title">Terima Kasih!</h2>
+            <p class="modal-message" id="modal-message">Absensi Anda telah tercatat! Terima kasih telah hadir di pameran kami.</p>
+            <button class="modal-close" id="modal-close">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // Inisialisasi particle background
+        function initParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 60;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                
+                // Tentukan jenis partikel (star, blue, purple, atau pink)
+                const particleType = Math.floor(Math.random() * 4);
+                if (particleType === 0) {
+                    particle.classList.add('particle', 'star');
+                } else if (particleType === 1) {
+                    particle.classList.add('particle', 'blue-particle');
+                } else if (particleType === 2) {
+                    particle.classList.add('particle', 'purple-particle');
+                } else {
+                    particle.classList.add('particle', 'pink-particle');
+                }
+                
+                // Ukuran acak
+                const size = Math.random() * 3 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Posisi acak
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Animasi delay acak
+                particle.style.animationDelay = `${Math.random() * 20}s`;
+                particle.style.animationDuration = `${Math.random() * 10 + 15}s`;
+                
+                // Twinkle effect untuk stars
+                if (particleType === 0) {
+                    particle.style.animation = `float ${Math.random() * 10 + 15}s infinite linear, twinkle ${Math.random() * 5 + 3}s infinite ease-in-out`;
+                }
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Inisialisasi tab system
+        function initTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Hapus active dari semua tab dan konten
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Tambah active ke tab yang diklik
+                    tab.classList.add('active');
+                    
+                    // Tampilkan konten yang sesuai
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+        }
+
+        // Inisialisasi mood selector
+        function initMoodSelector() {
+            const moodOptions = document.querySelectorAll('.mood-option');
+            const moodInput = document.getElementById('mood');
+            
+            moodOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Hapus selected dari semua opsi
+                    moodOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Tambah selected ke opsi yang diklik
+                    option.classList.add('selected');
+                    
+                    // Set nilai input
+                    moodInput.value = option.getAttribute('data-emoji');
+                });
+            });
+        }
+
+        // Hitung karakter pesan
+        function initCharCounter() {
+            const messageTextarea = document.getElementById('message');
+            const charCount = document.getElementById('char-count');
+            
+            messageTextarea.addEventListener('input', () => {
+                charCount.textContent = messageTextarea.value.length;
+                
+                // Warning jika mendekati batas
+                if (messageTextarea.value.length > 450) {
+                    charCount.style.color = '#ef4444';
+                } else {
+                    charCount.style.color = 'var(--gray-dark)';
+                }
+            });
+        }
+
+        // Animasi confetti
+        function showConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            canvas.style.display = 'block';
+            
+            const confettiPieces = [];
+            const confettiCount = 150;
+            const colors = ['#3b82f6', '#8b5cf6', '#c084fc', '#6366f1', '#a855f7'];
+            
+            // Buat potongan confetti
+            for (let i = 0; i < confettiCount; i++) {
+                confettiPieces.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speed: Math.random() * 3 + 2,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: Math.random() * 8 - 4
+                });
+            }
+            
+            // Animasi confetti
+            function animateConfetti() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                let stillFalling = false;
+                
+                confettiPieces.forEach(piece => {
+                    piece.y += piece.speed;
+                    piece.rotation += piece.rotationSpeed;
+                    
+                    if (piece.y < canvas.height) {
+                        stillFalling = true;
+                    }
+                    
+                    ctx.save();
+                    ctx.translate(piece.x, piece.y);
+                    ctx.rotate(piece.rotation * Math.PI / 180);
+                    ctx.fillStyle = piece.color;
+                    ctx.fillRect(-piece.size / 2, -piece.size / 2, piece.size, piece.size);
+                    ctx.restore();
+                });
+                
+                if (stillFalling) {
+                    requestAnimationFrame(animateConfetti);
+                } else {
+                    setTimeout(() => {
+                        canvas.style.display = 'none';
+                    }, 1500);
+                }
+            }
+            
+            animateConfetti();
+        }
+
+        // Update message count
+        function updateMessageCount() {
+            const messages = document.querySelectorAll('.message-card');
+            const countElement = document.getElementById('messages-count');
+            countElement.textContent = `${messages.length} pesan`;
+        }
+
+        // Tambahkan pesan ke feed
+        function addMessageToFeed(messageData) {
+            const messagesList = document.getElementById('messages-list');
+            
+            // Hapus empty state jika ada
+            const emptyState = messagesList.querySelector('.empty-state');
+            if (emptyState) {
+                emptyState.remove();
+            }
+            
+            const messageCard = document.createElement('div');
+            messageCard.classList.add('message-card', 'fade-in-up');
+            
+            const time = new Date().toLocaleTimeString('id-ID', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            messageCard.innerHTML = `
+                <div class="message-header">
+                    <div class="message-info">
+                        <div class="message-name">${messageData.name}</div>
+                        <div class="message-school">${messageData.school}</div>
+                    </div>
+                    <div class="message-mood">${messageData.mood}</div>
+                </div>
+                <div class="message-text">${messageData.message}</div>
+                <div class="message-time">${time}</div>
+            `;
+            
+            // Tambahkan ke awal feed
+            messagesList.insertBefore(messageCard, messagesList.firstChild);
+            
+            // Update count
+            updateMessageCount();
+            
+            // Batasi jumlah pesan di feed
+            if (messagesList.children.length > 20) {
+                messagesList.removeChild(messagesList.lastChild);
+            }
+        }
+
+        // Simpan data absensi ke localStorage
+        function saveAttendanceData(data) {
+            // Ambil data yang sudah ada
+            let attendanceData = JSON.parse(localStorage.getItem('attendanceData') || '[]');
+            
+            // Tambahkan data baru
+            attendanceData.push({
+                ...data,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Simpan kembali ke localStorage
+            localStorage.setItem('attendanceData', JSON.stringify(attendanceData));
+        }
+
+        // Submit form
+        function initFormSubmission() {
+            const form = document.getElementById('guest-form');
+            const modal = document.getElementById('success-modal');
+            const modalClose = document.getElementById('modal-close');
+            const modalMessage = document.getElementById('modal-message');
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                // Validasi form
+                const name = document.getElementById('name').value.trim();
+                const school = document.getElementById('school').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const message = document.getElementById('message').value.trim();
+                const mood = document.getElementById('mood').value;
+                
+                // Validasi data absensi
+                if (!name || !school) {
+                    alert('Oops, isi dulu semua kolom yang wajib diisi ya 🌙');
+                    return;
+                }
+                
+                // Validasi pesan jika diisi
+                if (message && message.length > 500) {
+                    alert('Pesan maksimal 500 karakter 🌙');
+                    return;
+                }
+                
+                // Tampilkan loading state
+                const submitBtn = form.querySelector('.submit-btn');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = 'Mengirim...';
+                submitBtn.disabled = true;
+                
+                try {
+                    // Simulasi pengiriman data
+                    await new Promise(resolve => setTimeout(resolve, 1200));
+                    
+                    // Simpan data absensi
+                    const attendanceData = {
+                        name,
+                        school,
+                        phone,
+                        email,
+                        message,
+                        mood
+                    };
+                    
+                    saveAttendanceData(attendanceData);
+                    
+                    // Tampilkan confetti dan modal
+                    showConfetti();
+                    
+                    // Sesuaikan pesan modal berdasarkan apakah ada pesan atau tidak
+                    if (message) {
+                        modalMessage.textContent = "Absensi dan pesan Anda telah tercatat! Terima kasih telah meninggalkan jejak di pameran kami 🚀";
+                        // Tambahkan pesan ke feed
+                        addMessageToFeed({
+                            name,
+                            school,
+                            message,
+                            mood: mood || "😊"
+                        });
+                    } else {
+                        modalMessage.textContent = "Absensi Anda telah tercatat! Terima kasih telah hadir di pameran kami 🚀";
+                    }
+                    
+                    modal.style.display = 'flex';
+                    
+                    // Reset form
+                    form.reset();
+                    document.getElementById('char-count').textContent = '0';
+                    document.querySelectorAll('.mood-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    alert('Terjadi kesalahan saat mengirim data. Silakan coba lagi.');
+                } finally {
+                    // Reset button state
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+            
+            // Tutup modal
+            modalClose.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+        }
+
+        // Load pesan contoh
+        function loadSampleMessages() {
+            const sampleMessages = [
+                {
+                    name: "Ahmad Rizki",
+                    school: "SMK Negeri 1 Jakarta",
+                    message: "Pameran aplikasi dan game kali ini sangat menginspirasi! Saya belajar banyak tentang perkembangan teknologi terbaru dan dapat ide untuk project sekolah.",
+                    mood: "🚀"
+                },
+                {
+                    name: "Siti Nurhaliza",
+                    school: "SMA Negeri 5 Bandung",
+                    message: "Keren banget! Aplikasi dan game yang ditampilkan sangat kreatif dan inovatif. Sukses selalu untuk RPL!",
+                    mood: "✨"
+                },
+                {
+                    name: "Budi Santoso",
+                    school: "SMK Teknologi Indonesia",
+                    message: "Senang bisa hadir di pameran ini. Banyak ide yang bisa saya terapkan untuk projek sekolah tahun depan.",
+                    mood: "👍"
+                },
+                {
+                    name: "Dewi Lestari",
+                    school: "SMA Plus PGRI Cibinong",
+                    message: "UI/UX design yang ditampilkan sangat memukau. Terima kasih atas inspirasinya!",
+                    mood: "❤️"
+                },
+                {
+                    name: "Rizky Pratama",
+                    school: "SMK TI Pembangunan",
+                    message: "Inovasi yang ditampilkan sangat futuristik. Sangat menginspirasi untuk terus belajar teknologi.",
+                    mood: "🌟"
+                },
+                {
+                    name: "Maya Sari",
+                    school: "SMA Negeri 8 Surabaya",
+                    message: "Presentasinya sangat menarik dan mudah dipahami. Good job untuk semua peserta!",
+                    mood: "🎉"
+                }
+            ];
+            
+            // Tampilkan sample messages dengan delay
+            sampleMessages.forEach((message, index) => {
+                setTimeout(() => {
+                    addMessageToFeed(message);
+                }, index * 200);
+            });
+        }
+
+        // Inisialisasi saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            initParticles();
+            initTabs();
+            initMoodSelector();
+            initCharCounter();
+            initFormSubmission();
+            loadSampleMessages();
+        });
+    </script>
+</body>
+</html>
